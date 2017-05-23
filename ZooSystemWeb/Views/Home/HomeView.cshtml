@@ -3,5 +3,13 @@
     ViewBag.Title = "HomeView";
 }
 
-<h2>HomeView</h2>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+<h2>Home</h2>
+
+<ul>
+    <li>@Html.ActionLink("Admin panel","Index", "Admin", null, new {@class = "btn btn-info" })</li>
+    <li>@Html.ActionLink("Visit zoo", "Index","Visitor", null, new { @class = "btn btn-warning" })</li>
+</ul>

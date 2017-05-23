@@ -149,7 +149,9 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Concrete\ZooDbContext.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\VisitorController.cs" />
     <Compile Include="Entities\Animal.cs" />
     <Compile Include="Entities\BaseEntity.cs" />
     <Compile Include="Entities\Visitor.cs" />
@@ -183,6 +185,9 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Admin\" />
+    <Folder Include="Views\Visitor\" />
+    <Folder Include="Views\Фвьшт\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

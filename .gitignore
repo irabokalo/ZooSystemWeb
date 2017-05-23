@@ -1,3 +1,4 @@
 packages/
 *.dll
 ZooSystemWeb/obj/Debug/
+ZooSystemWeb/bin/
