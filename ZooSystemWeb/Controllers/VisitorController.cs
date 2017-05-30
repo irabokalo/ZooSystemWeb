@@ -9,7 +9,7 @@ namespace ZooSystemWeb.Controllers
     public class VisitorController : Controller
     {
         // GET: Visitor
-        public ActionResult Index()
+        public ActionResult VisitZoo()
         {
             return View();
         }

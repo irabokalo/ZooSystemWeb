@@ -1,0 +1,58 @@
+﻿body {
+     font-family: 'Alfa Slab One';font-size: 22px;
+}
+
+.nav-tabs>li>a {
+    margin-right: 2px;
+    line-height: 1.42857143;
+    border: 1px solid transparent;
+    border-radius: 4px 4px 0 0;
+    font-family: 'Alfa Slab One';font-size: 22px;
+}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+    color: #555;
+    cursor: default;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-bottom-color: transparent;
+    font-family: 'Alfa Slab One';font-size: 22px;
+}
+
+.title-container {
+height: 100px;
+    background-image: url('long-2 (1).jpg');
+    text-align: center;
+    font-family: 'Alfa Slab One';
+    font-size: 50px;
+    padding: 30px;
+}
+
+.Edit-Form {
+    width: 50%;
+    margin-left: 40px;
+   font-family: 'Alfa Slab One';
+   font-size: 22px;
+    margin-top: 10px;
+    padding: 10px;
+    border: 5px solid #228b22;
+}
+
+.Edit-Form >input{
+    margin-left: 40px;
+   font-family: 'Alfa Slab One';
+   font-size: 22px;
+    margin-top: 10px;  
+}
+
+.Edit-Form>tr {
+  font-size: 32px;
+}
+
+.table>tbody>tr>td {
+      font-size: 22px;
+}
+
+#fon {
+    background: antiquewhite;
+}

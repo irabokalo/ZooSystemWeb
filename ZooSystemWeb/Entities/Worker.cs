@@ -8,13 +8,16 @@ using System.Threading.Tasks;
 
 namespace Zoo_system.Entities
 {
-    public class Worker: BaseEntity
-    {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int WorkerId { get; set; }
-        public virtual List<Animal> CaredAnimals { get; set; }
-        public int Salary { get; set; } 
-        public virtual Zoo WorkZoo { get; set; }
-    }
+  public class Worker : BaseEntity
+  {
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int WorkerId { get; set; }
+    public string Name { get; set; }
+    public string Surname { get; set; }
+    public int Age { get; set; }
+    public virtual List<Animal> CaredAnimals { get; set; }
+    public int Salary { get; set; }
+    public virtual Zoo WorkZoo { get; set; }
+  }
 }

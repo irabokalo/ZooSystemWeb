@@ -1,0 +1,163 @@
+﻿@using System.Web.UI.WebControls
+@model ZooSystemWeb.ViewModels.AnimalViewModel
+@{
+    ViewBag.Title = "AdminView";
+    Layout = null;
+}
+<link href="~/adminStyles.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<body>
+<div class="title-container">
+   <span id ="fon">Admin Panel</span> 
+</div>
+<div class="myContainer">
+    <ul class="nav nav-tabs">
+        <li><a data-toggle="tab" href="#menu1">Add Animal</a></li>
+        <li><a data-toggle="tab" href="#menu2">Add Worker</a></li>
+        <li><a data-toggle="tab" href="#menu3">View all</a></li>
+    </ul>
+</div>
+    
+    <div class="tab-content">
+        <div id="menu1" class="tab-pane fade">
+            @using (Html.BeginForm("AddAnimal", "Admin"))
+            {
+            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                <div class="Edit-Form">
+                    @Html.ValidationMessage("Worker existence")
+                    <span> Name of Animal</span>
+                    @Html.TextBoxFor(x => x.Name, new {@placeholder = "Input Name"})
+                    <br/>
+                    <span> Size of Animal</span>
+                    @Html.TextBoxFor(x => x.Size, new {@placeholder = "Input Size"})
+                    <br/>
+                    <span> Description of Animal</span>
+                    @Html.TextBoxFor(x => x.Description, new {@placeholder = "Input Description"})
+                    <br/>
+                    <span> Cost of Animal</span>
+                    @Html.TextBoxFor(x => x.Cost, new {@placeholder = "Input Cost"})
+                    <br/>
+                    <span> Careworker</span>
+                    @Html.TextBoxFor(x => x.CareworkerName, new { @placeholder = "Input Care Worker" })
+                    <br/>
+                    <input id="Submit" type="submit" value="Save" class="btn btn-success"/>
+                </div>
+            }
+        </div>
+        <div id="menu2" class="tab-pane fade">
+            @using (Html.BeginForm("AddWorker", "Admin"))
+            {
+                <div class="Edit-Form">
+                    <span> Name of worker</span>
+                    @Html.TextBoxFor(x => x.WorkerName, new { @placeholder = "Input Name" })
+                    <br />
+                    <span> Surname of worker</span>
+                    @Html.TextBoxFor(x => x.WorkerSurname, new { @placeholder = "Input Surname" })
+                    <br />
+                    <span> Age of worker</span>
+                    @Html.TextBoxFor(x => x.Age, new { @placeholder = "Input Age" })
+                    <br />
+                    <span> Salary of worker</span>
+                    @Html.TextBoxFor(x => x.Salary, new { @placeholder = "Input Salary" })
+                    <br />
+                   
+                    <input id="Submit" type="submit" value="Save" class="btn btn-success" />
+                </div>
+            }
+        </div>
+        <div id="menu3" class="tab-pane fade">
+            <div class="Edit-Form">
+                <span> Animals </span>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th> Description </th>
+                                <th>Size</th>
+                                <th>Cost</th>
+                                <th>Care worker</th>
+                                <th>Home zoo</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (@Model.Animals != null)
+                            {
+                                foreach (var animal in @Model.Animals)
+                                {
+                                    <tr>
+                                        <td> @animal.Name</td>
+                                        <td>@animal.Description</td>
+                                        <td>@animal.Size</td>
+                                        <td>@animal.Cost</td>
+                                        <td>@animal.CareWorker</td>
+                                        <td>@animal.HomeZoo</td>
+                                        <td>edit</td>
+                                        <td>
+                                            @using (Html.BeginForm("DeleteAnimal", "Admin", new {id = @animal.AnimalId}, FormMethod.Post))
+                                                 {
+                                        
+                                                     <input type="submit" value="Delete Animal" class="btn btn-default"/>
+                                                 }
+                                        </td>
+                                    </tr>
+                                }
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <span> Workers </span>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th> Surname </th>
+                                <th>Age</th>
+                                <th>Salary</th>
+                                <th>WorkZoo</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (@Model.Workers != null)
+                            {
+                                foreach (var animal in @Model.Workers)
+                                {
+                                    <tr>
+                                        <td> @animal.Name</td>
+                                        <td>@animal.Surname</td>
+                                        <td>@animal.Age</td>
+                                        <td>@animal.Salary</td>
+                                        <td>@animal.WorkZoo</td>
+                                        <td>                                          
+                                             edit                                     
+                                        </td>
+                                        <td>
+                                            @using (Html.BeginForm("DeleteWorker","Admin", new {id  = @animal.WorkerId}, FormMethod.Post,null))
+                                            {
+                                                @Html.AntiForgeryToken()
+
+                                                         <input type="submit" value="Delete Worker" class="btn btn-default"/>                                                     
+                                                 }
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+
