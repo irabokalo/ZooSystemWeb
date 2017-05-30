@@ -24,7 +24,9 @@ namespace ZooSystemWeb.ViewModels
     public int Salary { get; set; }
 
     public string  CareworkerName { get; set; }
-    public List<Worker> Workers { get; set; }
+        public string HomeZooName { get; set; }
+        public List<Worker> Workers { get; set; }
     public List<Animal> Animals { get; set; }
-  }
+        public List<Zoo> Zoos { get; set; }
+    }
 }

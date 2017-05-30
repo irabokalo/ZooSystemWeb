@@ -30,20 +30,27 @@ namespace ZooSystemWeb.Controllers
                 {
                     Name = model.Name,
                     Description = model.Description,
-                    Cost = model.Cost
+                    Cost = model.Cost,
+                    CareWorker = _context.Workers.ToList().Find(x => x.Name == model.CareworkerName)
 
                 });
                 _context.SaveChanges();
             }
                 else
                 {
-                    ModelState.AddModelError("Worker existence", "such worker doesn't exist!");
+                    return RedirectToAction("ErrorState","Admin","Such worker doesn't exist!");
                 }
             }
        
         return RedirectToAction("ViewAllAnimals");
 
     }
+
+      public ActionResult ErrorState()
+      {
+          return View();
+      }
+
 
     [HttpPost]
     public ActionResult AddWorker(AnimalViewModel model)
@@ -70,6 +77,7 @@ namespace ZooSystemWeb.Controllers
       AnimalViewModel wholeModel = new AnimalViewModel();
       wholeModel.Workers = _context.Workers.ToList();
       wholeModel.Animals = _context.Animals.ToList();
+        wholeModel.Zoos = _context.Zoos.ToList();
       return View("AdminView", wholeModel);
     }
 
@@ -96,7 +104,17 @@ namespace ZooSystemWeb.Controllers
       return RedirectToAction("ViewAllAnimals");
     }
 
+        [HttpPost, ActionName("DeleteZoo")]
 
+        public ActionResult DeleteZoo(int id)
+        {
+            if (_context.Zoos.Find(id) != null)
+            {
+                _context.Zoos.Remove(_context.Zoos.Find(id));
+            }
+            _context.SaveChanges();
+            return RedirectToAction("ViewAllAnimals");
+        }
 
-  }
+    }
 }

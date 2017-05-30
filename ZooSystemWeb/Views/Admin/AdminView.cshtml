@@ -10,40 +10,46 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <body>
-<div class="title-container">
-   <span id ="fon">Admin Panel</span> 
-</div>
-<div class="myContainer">
-    <ul class="nav nav-tabs">
-        <li><a data-toggle="tab" href="#menu1">Add Animal</a></li>
-        <li><a data-toggle="tab" href="#menu2">Add Worker</a></li>
-        <li><a data-toggle="tab" href="#menu3">View all</a></li>
-    </ul>
-</div>
-    
+    <div class="title-container">
+        <span id="fon">Admin Panel</span>
+    </div>
+    <div class="myContainer">
+        <ul class="nav nav-tabs">
+            <li><a data-toggle="tab" href="#menu1">Add Animal</a></li>
+            <li><a data-toggle="tab" href="#menu2">Add Worker</a></li>
+            <li><a data-toggle="tab" href="#menu3">View all</a></li>
+            <li><a data-toggle="tab" href="#menu4">Visit zoo</a></li>
+            <li><a data-toggle="tab" href="#menu5">Statistics</a></li>
+        </ul>
+    </div>
+
     <div class="tab-content">
         <div id="menu1" class="tab-pane fade">
             @using (Html.BeginForm("AddAnimal", "Admin"))
             {
-            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                @*@Html.ValidationSummary(false, "", new { @class = "text-danger" })*@
                 <div class="Edit-Form">
-                    @Html.ValidationMessage("Worker existence")
+                    @Html.ValidationSummary(true)
+
                     <span> Name of Animal</span>
-                    @Html.TextBoxFor(x => x.Name, new {@placeholder = "Input Name"})
-                    <br/>
+                    @Html.TextBoxFor(x => x.Name, new { @placeholder = "Input Name" })
+                    <br />
                     <span> Size of Animal</span>
-                    @Html.TextBoxFor(x => x.Size, new {@placeholder = "Input Size"})
-                    <br/>
+                    @Html.TextBoxFor(x => x.Size, new { @placeholder = "Input Size" })
+                    <br />
                     <span> Description of Animal</span>
-                    @Html.TextBoxFor(x => x.Description, new {@placeholder = "Input Description"})
-                    <br/>
+                    @Html.TextBoxFor(x => x.Description, new { @placeholder = "Input Description" })
+                    <br />
                     <span> Cost of Animal</span>
-                    @Html.TextBoxFor(x => x.Cost, new {@placeholder = "Input Cost"})
-                    <br/>
+                    @Html.TextBoxFor(x => x.Cost, new { @placeholder = "Input Cost" })
+                    <br />
                     <span> Careworker</span>
                     @Html.TextBoxFor(x => x.CareworkerName, new { @placeholder = "Input Care Worker" })
-                    <br/>
-                    <input id="Submit" type="submit" value="Save" class="btn btn-success"/>
+                    <br />
+                    <span> Home zoo</span>
+                    @Html.TextBoxFor(x => x.HomeZooName, new { @placeholder = "Input Home zoo" })
+                    <br />
+                    <input id="Submit" type="submit" value="Save" class="btn btn-success" />
                 </div>
             }
         </div>
@@ -63,7 +69,7 @@
                     <span> Salary of worker</span>
                     @Html.TextBoxFor(x => x.Salary, new { @placeholder = "Input Salary" })
                     <br />
-                   
+
                     <input id="Submit" type="submit" value="Save" class="btn btn-success" />
                 </div>
             }
@@ -95,15 +101,23 @@
                                         <td>@animal.Description</td>
                                         <td>@animal.Size</td>
                                         <td>@animal.Cost</td>
-                                        <td>@animal.CareWorker</td>
+                                        @if (@animal.CareWorker != null)
+                                        {
+                                            <td>@animal.CareWorker.Name @animal.CareWorker.Surname</td>
+                                        }
+
+                                        else
+                                        {
+                                            <td>- No careworkers</td>
+                                        }
                                         <td>@animal.HomeZoo</td>
                                         <td>edit</td>
                                         <td>
-                                            @using (Html.BeginForm("DeleteAnimal", "Admin", new {id = @animal.AnimalId}, FormMethod.Post))
-                                                 {
-                                        
-                                                     <input type="submit" value="Delete Animal" class="btn btn-default"/>
-                                                 }
+                                            @using (Html.BeginForm("DeleteAnimal", "Admin", new { id = @animal.AnimalId }, FormMethod.Post))
+                                            {
+
+                                                <input type="submit" value="Delete Animal" class="btn btn-default" />
+                                            }
                                         </td>
                                     </tr>
                                 }
@@ -138,16 +152,15 @@
                                         <td>@animal.Age</td>
                                         <td>@animal.Salary</td>
                                         <td>@animal.WorkZoo</td>
-                                        <td>                                          
-                                             edit                                     
+                                        <td>
+                                            edit
                                         </td>
                                         <td>
-                                            @using (Html.BeginForm("DeleteWorker","Admin", new {id  = @animal.WorkerId}, FormMethod.Post,null))
+                                            @using (Html.BeginForm("DeleteWorker", "Admin", new { id = @animal.WorkerId }, FormMethod.Post, null))
                                             {
-                                                @Html.AntiForgeryToken()
 
-                                                         <input type="submit" value="Delete Worker" class="btn btn-default"/>                                                     
-                                                 }
+                                                <input type="submit" value="Delete Worker" class="btn btn-default" />
+                                            }
                                         </td>
                                     </tr>
                                 }
@@ -156,8 +169,45 @@
                     </table>
                 </div>
 
+
+
+                <span> Zoos </span>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (@Model.Zoos != null)
+                            {
+                                foreach (var animal in @Model.Zoos)
+                                {
+                                    <tr>
+                                        <td> @animal.Name</td>
+
+                                        <td>
+                                            edit
+                                        </td>
+                                        <td>
+                                            @using (Html.BeginForm("DeleteZoo", "Admin", new { id = @animal.ZooId }, FormMethod.Post, null))
+                                            {
+
+                                                <input type="submit" value="Delete Zoo" class="btn btn-default" />
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
+            
+
+        </div>
+
 </body>
 
