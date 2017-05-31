@@ -15,7 +15,9 @@ namespace Zoo_system.Entities
         public int VisitorId { get; set; }
 
         public string Name { get; set; }
+        public string DateOfVisit { get; set; }
         public virtual Animal FavotiteAnimal { get; set; }
+        
         public virtual List<Zoo> Zoos { get; set; }
     }
 }

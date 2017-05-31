@@ -18,8 +18,9 @@
             <li><a data-toggle="tab" href="#menu1">Add Animal</a></li>
             <li><a data-toggle="tab" href="#menu2">Add Worker</a></li>
             <li><a data-toggle="tab" href="#menu3">View all</a></li>
-            <li><a data-toggle="tab" href="#menu4">Visit zoo</a></li>
-            <li><a data-toggle="tab" href="#menu5">Statistics</a></li>
+            <li><a data-toggle="tab" href="#menu4">Add Zoo</a></li>
+            <li><a data-toggle="tab" href="#menu5">Visit zoo</a></li>
+            <li><a data-toggle="tab" href="#menu6">Statistics</a></li>
         </ul>
     </div>
 
@@ -69,7 +70,8 @@
                     <span> Salary of worker</span>
                     @Html.TextBoxFor(x => x.Salary, new { @placeholder = "Input Salary" })
                     <br />
-
+                    <span> Work zoo</span>
+                    @Html.TextBoxFor(x => x.HomeZooName, new { @placeholder = "Input Work zoo" })
                     <input id="Submit" type="submit" value="Save" class="btn btn-success" />
                 </div>
             }
@@ -77,6 +79,15 @@
         <div id="menu3" class="tab-pane fade">
             <div class="Edit-Form">
                 <span> Animals </span>
+                @using (Html.BeginForm("SearchAnimal", "Admin", FormMethod.Post, null))
+            {
+                    @Html.AntiForgeryToken()
+
+                    <p>
+                        Find by name: <input id="SearchString" name="SearchString" type="text">
+                        <input type="submit" value="Search">
+                    </p>
+                }
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
@@ -110,7 +121,7 @@
                                         {
                                             <td>- No careworkers</td>
                                         }
-                                        <td>@animal.HomeZoo</td>
+                                        <td>@animal.HomeZoo.Name</td>
                                         <td>edit</td>
                                         <td>
                                             @using (Html.BeginForm("DeleteAnimal", "Admin", new { id = @animal.AnimalId }, FormMethod.Post))
@@ -128,6 +139,15 @@
                 </div>
 
                 <span> Workers </span>
+                @using (Html.BeginForm("SearchWorker", "Admin", FormMethod.Post, null))
+            {
+                    @Html.AntiForgeryToken()
+
+                    <p>
+                        Find by name: <input id="SearchString" name="SearchString" type="text">
+                        <input type="submit" value="Search">
+                    </p>
+                }
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
@@ -151,7 +171,7 @@
                                         <td>@animal.Surname</td>
                                         <td>@animal.Age</td>
                                         <td>@animal.Salary</td>
-                                        <td>@animal.WorkZoo</td>
+                                        <td>@animal.WorkZoo.Name</td>
                                         <td>
                                             edit
                                         </td>
@@ -172,6 +192,15 @@
 
 
                 <span> Zoos </span>
+                @using (Html.BeginForm("SearchZoo", "Admin", FormMethod.Post, null))
+            {
+                    @Html.AntiForgeryToken()
+
+                    <p>
+                        Find by name: <input id="SearchString" name="SearchString" type="text">
+                        <input type="submit" value="Search">
+                    </p>
+                }
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
@@ -203,9 +232,96 @@
                         </tbody>
                     </table>
                 </div>
+
+                <span> Visitors </span>
+                @using (Html.BeginForm("SearchVisitor", "Admin", FormMethod.Post, null))
+            {
+                    @Html.AntiForgeryToken()
+
+                    <p>
+                        Find by name: <input id="SearchString" name="SearchString" type="text">
+                        <input type="submit" value="Search">
+                    </p>
+                }
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Date</th>
+                                <th>Favorite Animal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (@Model.Visitors != null)
+                            {
+                                foreach (var animal in @Model.Visitors)
+                                {
+                                    <tr>
+                                        <td> @animal.Name</td>
+                                        <td>@animal.DateOfVisit</td>
+                                        <td>
+                                            @animal.FavotiteAnimal.Name
+                                    </td>
+
+                                </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-            
+
+        <div id="menu4" class="tab-pane fade">
+            @using (Html.BeginForm("AddZoo", "Admin"))
+            {
+                @*@Html.ValidationSummary(false, "", new { @class = "text-danger" })*@
+                <div class="Edit-Form">
+                    @Html.ValidationSummary(true)
+
+                    <span> Name of Zoo</span>
+                    @Html.TextBoxFor(x => x.ZooName, new { @placeholder = "Input zoo Name" })
+                    <br />
+
+                    <input id="Submit" type="submit" value="Save" class="btn btn-success" />
+                </div>
+            }
+        </div>
+    <div id="menu5" class="tab-pane fade">
+        @using (Html.BeginForm("AddVisitor", "Admin"))
+        {
+                
+            <div class="Edit-Form">
+                @Html.ValidationSummary(true)
+
+                <span> Name of Visitor</span>
+                @Html.TextBoxFor(x => x.VisitorName, new { @placeholder = "Input Name" })
+                <br />
+                <span> Favorite animal</span>
+                @Html.TextBoxFor(x => x.FavoriteAnimal, new { @placeholder = "Input Animal" })
+                <br />
+                <input id="Submit" type="submit" value="Save" class="btn btn-success" />
+            </div>
+        }
+    </div>
+    <div id="menu6" class="tab-pane fade">
+        <div class="Edit-Form">
+            Statistics
+            <button data-toggle="collapse" data-target="#demo">The most popelar animal</button>
+
+            <div id="demo" class="collapse">
+                So it is:
+                @if (Model.TheMostPopularAnimal != null)
+            {
+                    @Model.TheMostPopularAnimal.Name
+                    @Model.TheMostPopularAnimal.Description
+                    @Model.TheMostPopularAnimal.Cost
+                }
+
+            </div>
+        </div>
+        </div>
 
         </div>
 

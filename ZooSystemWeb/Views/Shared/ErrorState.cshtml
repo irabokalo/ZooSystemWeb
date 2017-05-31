@@ -1,7 +1,12 @@
-﻿
+﻿@model string
 @{
     ViewBag.Title = "ErrorState";
+    Layout = null;
 }
+<link href="~/adminStyles.css" rel="stylesheet" />
 
-<div>Such worker doesn't exist!</div>        
+<div class="Edit-Form">
+    @ViewBag.message
+@Html.ActionLink("Go back", "ViewAllAnimals", "Admin", new { @class = "btn btn-success" })
 
+</div> 
